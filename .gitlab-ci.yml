@@ -1,0 +1,34 @@
+image: node:18 # Use Node.js as the build environment
+
+stages:
+  - install
+  - build
+  - deploy
+
+cache:
+  key: ${CI_COMMIT_REF_SLUG}
+  paths:
+    - node_modules/
+
+install_dependencies:
+  stage: install
+  script:
+    - npm install
+  artifacts:
+    paths:
+      - node_modules/
+
+build:
+  stage: build
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - dist/
+
+deploy:
+  stage: deploy
+  script:
+    - echo "Deploy step goes here" # Modify for actual deployment
+  only:
+    - main
